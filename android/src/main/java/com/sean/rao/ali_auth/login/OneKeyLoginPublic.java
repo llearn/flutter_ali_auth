@@ -49,6 +49,15 @@ public class OneKeyLoginPublic extends LoginParams {
     }
 
     /**
+     * 重复初始化时刷新UI
+     */
+    public void refreshUiConfig(Object arguments) {
+        jsonObject = formatParmas(arguments);
+        config = getFormatConfig(jsonObject);
+        mUIConfig = BaseUIConfig.init(jsonObject.getIntValue("pageType"));
+    }
+
+    /**
      * 初始化SDK
      */
     private void sdkInit() {
