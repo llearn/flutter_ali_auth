@@ -84,6 +84,9 @@ public class AliAuthPlugin extends FlutterActivity implements FlutterPlugin, Act
       case "getPlatformVersion":
         result.success("当前Android信息：" + android.os.Build.VERSION.RELEASE);
         break;
+      case "getSdkVersion":
+        result.success(PhoneNumberAuthHelper.getVersion());
+        break;
       case "getCurrentCarrierName":
         // CMCC(移动)、CUCC(联通)、CTCC(电信)
         String carrierName = "获取失败";

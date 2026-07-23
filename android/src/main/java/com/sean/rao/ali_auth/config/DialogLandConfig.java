@@ -9,6 +9,7 @@ import android.widget.RelativeLayout;
 
 import com.mobile.auth.gatewayauth.AuthRegisterViewConfig;
 import com.mobile.auth.gatewayauth.CustomInterface;
+import com.sean.rao.ali_auth.common.CustomAuthUIControlClickListener;
 import com.sean.rao.ali_auth.utils.AppUtils;
 
 public class DialogLandConfig extends BaseUIConfig{
@@ -69,6 +70,7 @@ public class DialogLandConfig extends BaseUIConfig{
 //                    }
 //                })
 //                .build());
+        mAuthHelper.setUIClickListener(new CustomAuthUIControlClickListener());
         mAuthHelper.setAuthUIConfig(config.setScreenOrientation(authPageOrientation).create());
     }
 

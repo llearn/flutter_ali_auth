@@ -1,9 +1,22 @@
 #  
 
-## 1.3.9
-* 修复BUG
+## 1.4.0
+* 更新android sdk 为 2.14.23
+* 更新ios sdk 为 2.14.18
+* 将IOS的引入改为动态库，将framework修改xcframework 兼容 Apple Silicon iOS 26+ simulators
+* 修复 Android 端 700001 回调不到达 Flutter 的问题
+* 修复 Android 端 getSdkVersion 方法未实现的问题
+* 修复 iOS 端 privacyOffsetX 参数无效的问题
+* 修复 iOS 端 buildSheetPortraitModel 协议链接不生效的问题
+* 修复 iOS 端 protocolColor/protocolCustomColor 不生效的问题
+* 修复 iOS 端 privacyAlertTitleOffsetY 被覆盖的问题
+* 修复 iOS 端 privacyAlertContentHorizontalMargin 不支持的问题
+* 统一 500001 状态码的消息文本
+* 补齐 Web 端 ali_auth_web 插件实现，不支持的方法抛出明确提示
+* 新增动态参数配置页面，支持可视化调整 AliAuthModel 全部参数
+* 优化 Demo 页面布局，采用卡片式分组设计
 
-## 1.3.8
+## 1.3.9
 * 更新android sdk 为 2.14.19
 * 更新ios sdk 为 2.14.15
 * 更新web sdk 为 2.1.15

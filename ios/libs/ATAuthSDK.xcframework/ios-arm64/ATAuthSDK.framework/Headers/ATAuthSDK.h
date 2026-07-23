@@ -21,3 +21,4 @@ FOUNDATION_EXPORT const unsigned char ATAuthSDKVersionString[];
 #import "PNSReturnCode.h"
 #import "TXCustomModel.h"
 #import "PNSReporter.h"
+#import "PNSFeatureManager.h"

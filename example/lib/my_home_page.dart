@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:ali_auth/ali_auth.dart';
 import 'package:ali_auth_example/my_router_page.dart';
+import 'package:ali_auth_example/config_editor_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -160,175 +161,152 @@ class MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('AliAuth插件演示'),
+        title: const Text('AliAuth 一键登录演示'),
+        centerTitle: true,
+        elevation: 0,
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Color(0xFF1565C0), Color(0xFF42A5F5)],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
+        ),
       ),
-      body: Center(
-        child: ListView(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          children: [
-            Text(status),
-            ElevatedButton(
-              onPressed: () async {
-                await AliAuth.initSdk(getFullPortConfig());
-              },
-              child: const Text("开始全屏登录"),
+      body: Column(
+        children: [
+          // 状态栏
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Colors.blue.shade50, Colors.white],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
             ),
-            ElevatedButton(
-              onPressed: () async {
-                await AliAuth.initSdk(getFullPortStatusConfig());
-              },
-              child: const Text("开始全屏登录隐藏状态栏"),
+            child: Row(
+              children: [
+                Icon(Icons.info_outline, size: 18, color: Colors.blue.shade700),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    status,
+                    style: TextStyle(fontSize: 12, color: Colors.blue.shade800),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ],
             ),
-            ElevatedButton(
-              onPressed: () async {
-                await AliAuth.initSdk(getFullPortPrivacyConfig());
-              },
-              child: const Text("开始全屏登录二次认证"),
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                await AliAuth.initSdk(getFullPortVideoConfig());
-              },
-              child: const Text("开始全屏Video登录"),
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                await AliAuth.initSdk(getFullPortGifConfig());
-              },
-              child: const Text("开始全屏Gif登录"),
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                await AliAuth.initSdk(getFullPortCustomConfig());
-              },
-              child: const Text("开始自定义界面登录"),
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                await AliAuth.initSdk(getDialogConfig());
-              },
-              child: const Text("开始弹窗登录"),
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                await AliAuth.initSdk(getDialogWebConfig());
-              },
-              child: const Text("开始弹窗自定义web协议页面登录"),
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                await AliAuth.initSdk(getDialogButtomConfig());
-              },
-              child: const Text("开始底部弹窗登录"),
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                await AliAuth.initSdk(getFullPortConfig(isDelay: true));
-              },
-              child: const Text("初始化全屏延迟登录"),
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                await AliAuth.initSdk(getFullPortVideoConfig(isDelay: true));
-              },
-              child: const Text("初始化全屏Video登录"),
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                await AliAuth.initSdk(getFullPortGifConfig(isDelay: true));
-              },
-              child: const Text("初始化全屏Gif登录"),
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                await AliAuth.initSdk(getDialogConfig(isDelay: true));
-              },
-              child: const Text("初始化弹窗延迟登录"),
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                await AliAuth.initSdk(getDialogButtomConfig(isDelay: true));
-              },
-              child: const Text("初始化底部弹窗延迟登录"),
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                await AliAuth.login();
-              },
-              child: const Text("开始延迟登录"),
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                final cellularStatus = await AliAuth.checkCellularDataEnable;
-                setState(() {
-                  status = "当前蜂窝网络开启状态：$cellularStatus";
-                });
-              },
-              child: const Text("检测是否开启蜂窝网络"),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                // 使用pushReplacementNamed 为了触发dispose
-                // Navigator.of(context).pushReplacementNamed(
-                //   "/routerPage"
-                // );
-                Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-                  return const MyRouterPage();
-                }));
-              },
-              child: const Text("跳转页面"),
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                /// 通过isOnlyListen
-                AliAuth.loginListen(
-                  onEvent: (onEvent) {
-                    if (kDebugMode) {
-                      print("----------------> $onEvent <----------------");
-                    }
-                    setState(() {
-                      status = onEvent.toString();
+          ),
+          // 功能列表
+          Expanded(
+            child: ListView(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              children: [
+                _buildSectionTitle('📱 全屏登录'),
+                _buildCard([
+                  _buildActionBtn('全屏登录', Icons.fullscreen, Colors.blue, () => AliAuth.initSdk(getFullPortConfig())),
+                  _buildActionBtn('隐藏状态栏', Icons.visibility_off, Colors.indigo, () => AliAuth.initSdk(getFullPortStatusConfig())),
+                  _buildActionBtn('二次认证', Icons.verified_user, Colors.teal, () => AliAuth.initSdk(getFullPortPrivacyConfig())),
+                  _buildActionBtn('Video背景', Icons.videocam, Colors.deepPurple, () => AliAuth.initSdk(getFullPortVideoConfig())),
+                  _buildActionBtn('Gif背景', Icons.gif_box, Colors.orange, () => AliAuth.initSdk(getFullPortGifConfig())),
+                  _buildActionBtn('自定义界面', Icons.dashboard, Colors.pink, () => AliAuth.initSdk(getFullPortCustomConfig())),
+                ]),
+                const SizedBox(height: 12),
+                _buildSectionTitle('🪟 弹窗登录'),
+                _buildCard([
+                  _buildActionBtn('弹窗登录', Icons.chat_bubble_outline, Colors.blue, () => AliAuth.initSdk(getDialogConfig())),
+                  _buildActionBtn('自定义Web协议', Icons.web, Colors.cyan, () => AliAuth.initSdk(getDialogWebConfig())),
+                  _buildActionBtn('底部弹窗', Icons.keyboard_arrow_up, Colors.lightBlue, () => AliAuth.initSdk(getDialogButtomConfig())),
+                ]),
+                const SizedBox(height: 12),
+                _buildSectionTitle('⏳ 延迟登录'),
+                _buildCard([
+                  _buildActionBtn('全屏延迟', Icons.timer, Colors.blue, () => AliAuth.initSdk(getFullPortConfig(isDelay: true))),
+                  _buildActionBtn('Video延迟', Icons.videocam, Colors.deepPurple, () => AliAuth.initSdk(getFullPortVideoConfig(isDelay: true))),
+                  _buildActionBtn('Gif延迟', Icons.gif_box, Colors.orange, () => AliAuth.initSdk(getFullPortGifConfig(isDelay: true))),
+                  _buildActionBtn('弹窗延迟', Icons.chat_bubble_outline, Colors.cyan, () => AliAuth.initSdk(getDialogConfig(isDelay: true))),
+                  _buildActionBtn('底部弹窗延迟', Icons.keyboard_arrow_up, Colors.lightBlue, () => AliAuth.initSdk(getDialogButtomConfig(isDelay: true))),
+                  _buildActionBtn('▶ 执行延迟登录', Icons.play_arrow, Colors.green, () => AliAuth.login()),
+                ]),
+                const SizedBox(height: 12),
+                _buildSectionTitle('🛠️ 工具 & 设置'),
+                _buildCard([
+                  _buildActionBtn('检测蜂窝网络', Icons.signal_cellular_alt, Colors.blue, () async {
+                    final cellularStatus = await AliAuth.checkCellularDataEnable;
+                    setState(() => status = "当前蜂窝网络开启状态：$cellularStatus");
+                  }),
+                  _buildActionBtn('添加多个监听', Icons.headphones, Colors.teal, () {
+                    AliAuth.loginListen(onEvent: (onEvent) {
+                      if (kDebugMode) print("----------------> $onEvent <----------------");
+                      setState(() => status = onEvent.toString());
+                    }, isOnlyOne: false);
+                  }),
+                  _buildActionBtn('单监听模式', Icons.headset, Colors.indigo, () {
+                    AliAuth.loginListen(onEvent: (onEvent) {
+                      if (kDebugMode) print("----------------> $onEvent <----------------");
+                      setState(() => status = onEvent.toString());
                     });
-                  },
-                  isOnlyOne: false,
-                );
-              },
-              child: const Text("添加多个监听"),
+                  }),
+                  if (Platform.isIOS)
+                    _buildActionBtn('Apple登录', Icons.apple, Colors.black, () => AliAuth.appleLogin),
+                  _buildActionBtn('打开跳转页面', Icons.open_in_new, Colors.amber.shade700, () => AliAuth.openPage("routerPage")),
+                  _buildActionBtn('跳转路由页', Icons.navigation, Colors.blueGrey, () {
+                    Navigator.of(context).push(MaterialPageRoute(builder: (_) => const MyRouterPage()));
+                  }),
+                  _buildActionBtn('⚙️ 动态参数配置', Icons.tune, Colors.deepOrange, () {
+                    Navigator.of(context).push(MaterialPageRoute(builder: (_) => const ConfigEditorPage()));
+                  }),
+                ]),
+                const SizedBox(height: 24),
+              ],
             ),
-            ElevatedButton(
-              onPressed: () async {
-                AliAuth.loginListen(
-                  onEvent: (onEvent) {
-                    if (kDebugMode) {
-                      print("----------------> $onEvent <----------------");
-                    }
-                    setState(() {
-                      status = onEvent.toString();
-                    });
-                  },
-                );
-              },
-              child: const Text("只能添加一个监听"),
-            ),
+          ),
+        ],
+      ),
+    );
+  }
 
-            /// 苹果专用，安卓调用报错
-            Platform.isIOS
-                ? ElevatedButton(
-                    onPressed: () async {
-                      await AliAuth.appleLogin;
-                    },
-                    child: const Text("开始Apple登录"),
-                  )
-                : Container(),
-            ElevatedButton(
-              onPressed: () async {
-                /// 传值实例
-                /// await AliAuth.openPage("routerPage?{id:123}");
-                await AliAuth.openPage("routerPage");
-              },
-              child: const Text("打开跳转页面"),
-            )
-          ],
+  Widget _buildSectionTitle(String title) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 4, bottom: 8),
+      child: Text(title, style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: Colors.black87)),
+    );
+  }
+
+  Widget _buildCard(List<Widget> children) {
+    return Card(
+      elevation: 1,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      margin: EdgeInsets.zero,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+        child: Column(children: children),
+      ),
+    );
+  }
+
+  Widget _buildActionBtn(String label, IconData icon, Color color, VoidCallback onPressed) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 3),
+      child: SizedBox(
+        width: double.infinity,
+        child: ElevatedButton.icon(
+          onPressed: onPressed,
+          icon: Icon(icon, size: 18),
+          label: Text(label, style: const TextStyle(fontSize: 14)),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: color.withValues(alpha: 0.1),
+            foregroundColor: color,
+            elevation: 0,
+            padding: const EdgeInsets.symmetric(vertical: 12),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+            side: BorderSide(color: color.withValues(alpha: 0.3)),
+          ),
         ),
       ),
     );

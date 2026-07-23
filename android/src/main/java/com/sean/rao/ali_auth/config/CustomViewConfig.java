@@ -8,6 +8,7 @@ import android.widget.RelativeLayout;
 
 import com.mobile.auth.gatewayauth.AuthRegisterViewConfig;
 import com.mobile.auth.gatewayauth.CustomInterface;
+import com.sean.rao.ali_auth.common.CustomAuthUIControlClickListener;
 
 import static com.nirvana.tools.core.AppUtils.dp2px;
 
@@ -58,6 +59,8 @@ public class CustomViewConfig extends BaseUIConfig {
         if (Build.VERSION.SDK_INT == 26) {
             authPageOrientation = ActivityInfo.SCREEN_ORIENTATION_BEHIND;
         }
+
+        mAuthHelper.setUIClickListener(new CustomAuthUIControlClickListener());
 
         mAuthHelper.setAuthUIConfig(config.setScreenOrientation(authPageOrientation).create());
     }

@@ -3,6 +3,9 @@ package com.sean.rao.ali_auth.config;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
 
+import com.mobile.auth.gatewayauth.AuthUIConfig;
+import com.sean.rao.ali_auth.common.CustomAuthUIControlClickListener;
+
 public class FullLandConfig extends BaseUIConfig {
 
     private int mOldScreenOrientation;
@@ -35,6 +38,7 @@ public class FullLandConfig extends BaseUIConfig {
         }
         updateScreenSize(authPageOrientation);
 
+        mAuthHelper.setUIClickListener(new CustomAuthUIControlClickListener());
         mAuthHelper.setAuthUIConfig(config.setScreenOrientation(authPageOrientation).create());
     }
 

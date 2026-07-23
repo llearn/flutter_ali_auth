@@ -263,11 +263,11 @@ typedef CGRect(^PNSBuildFrameBlock)(CGSize screenSize, CGSize superViewSize, CGR
 @property (nonatomic, copy) NSString *privacyOperatorSufText;
 /** 运营商协议指定显示顺序，默认0，即第1个协议显示，最大值可为3，即第4个协议显示*/
 @property (nonatomic, assign) NSInteger privacyOperatorIndex;
-/** 协议整体文案字体，小于12.0不生效 */
+/** 协议整体文案字体，小于10.0不生效 */
 @property (nonatomic, strong) UIFont *privacyFont;
 /** 协议整体文案行间距，默认0 */
 @property (nonatomic, assign) CGFloat privacyLineSpaceDp;
-/** 运营商协议文案字体，仅对运营商协议本体文案和前后缀生效，小于12.0不生效 */
+/** 运营商协议文案字体，仅对运营商协议本体文案和前后缀生效，小于10.0不生效 */
 @property (nonatomic, strong) UIFont *privacyOperatorFont;
 /** 运营商协议文案下划线，仅对运营商协议本体文案和前后缀生效，YES：展示下划线；NO：不展示下划线，默认不展示 */
 @property (nonatomic, assign) BOOL privacyOperatorUnderline;
@@ -358,7 +358,7 @@ typedef CGRect(^PNSBuildFrameBlock)(CGSize screenSize, CGSize superViewSize, CGR
 @property (nonatomic, assign) CGFloat privacyAlertAlpha;
 /** 二次隐私协议弹窗标题文字内容，默认"请阅读并同意以下条款" */
 @property (nonatomic, copy) NSString *privacyAlertTitleContent;
-/** 二次隐私协议弹窗标题文字字体，最小12，默认12 */
+/** 二次隐私协议弹窗标题文字字体，最小10，默认10 */
 @property (nonatomic, strong) UIFont *privacyAlertTitleFont;
 /** 二次隐私协议弹窗标题文字颜色，默认黑色 */
 @property (nonatomic, strong) UIColor *privacyAlertTitleColor;
@@ -366,7 +366,7 @@ typedef CGRect(^PNSBuildFrameBlock)(CGSize screenSize, CGSize superViewSize, CGR
 @property (nonatomic, strong) UIColor *privacyAlertTitleBackgroundColor;
 /** 二次隐私协议弹窗标题位置，默认居中*/
 @property (nonatomic, assign) NSTextAlignment privacyAlertTitleAlignment;
-/** 二次隐私协议弹窗协议内容文字字体，最小12，默认12 */
+/** 二次隐私协议弹窗协议内容文字字体，最小10，默认10 */
 @property (nonatomic, strong) UIFont *privacyAlertContentFont;
 /** 二次隐私协议弹窗协议内容行间距，默认0 */
 @property (nonatomic, assign) CGFloat privacyAlertLineSpaceDp;
@@ -374,7 +374,7 @@ typedef CGRect(^PNSBuildFrameBlock)(CGSize screenSize, CGSize superViewSize, CGR
 @property (nonatomic, strong) UIColor *privacyAlertContentBackgroundColor;
 /** 二次隐私协议弹窗协议内容颜色数组，[非点击文案颜色，点击文案颜色],默认[0x999999,0x1890FF] */
 @property (nonatomic, copy) NSArray<UIColor *> *privacyAlertContentColors;
-/** 二次隐私协议弹窗运营商协议内容文字字体，仅对运营商协议部分的文本生效，最小12，默认12 */
+/** 二次隐私协议弹窗运营商协议内容文字字体，仅对运营商协议部分的文本生效，最小10，默认10 */
 @property (nonatomic, strong) UIFont *privacyAlertContentOperatorFont;
 /** 二次隐私协议弹窗运营商协议内容文字下划线，仅对运营商协议部分的文本生效，YES：展示下划线，NO：不展示下划线，默认不展示 */
 @property (nonatomic, assign) BOOL privacyAlertContentUnderline;

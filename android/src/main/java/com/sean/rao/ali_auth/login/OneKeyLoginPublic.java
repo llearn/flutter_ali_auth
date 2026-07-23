@@ -18,8 +18,6 @@ import com.sean.rao.ali_auth.common.LoginParams;
 import com.sean.rao.ali_auth.config.BaseUIConfig;
 import com.sean.rao.ali_auth.utils.UtilTool;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 
 import io.flutter.plugin.common.EventChannel;
@@ -83,10 +81,7 @@ public class OneKeyLoginPublic extends LoginParams {
                 Log.e(TAG, "获取token失败：" + s);
                 try {
                     TokenRet tokenRet = TokenRet.fromJson(s);
-                    List<String> skip = Collections.singletonList(ResultCode.CODE_ERROR_USER_SWITCH);
-                    if (!skip.contains(tokenRet.getCode())) {
-                        showResult(tokenRet.getCode(), tokenRet.getMsg(),null);
-                    }
+                    showResult(tokenRet.getCode(), tokenRet.getMsg(),null);
                 } catch (Exception e) {
                     e.fillInStackTrace();
                 }

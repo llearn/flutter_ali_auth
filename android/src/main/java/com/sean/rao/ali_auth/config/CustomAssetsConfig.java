@@ -10,6 +10,7 @@ import com.mobile.auth.gatewayauth.AuthRegisterXmlConfig;
 import com.mobile.auth.gatewayauth.ui.AbstractPnsViewDelegate;
 import com.sean.rao.ali_auth.R;
 import com.sean.rao.ali_auth.common.CacheManage;
+import com.sean.rao.ali_auth.common.CustomAuthUIControlClickListener;
 import com.sean.rao.ali_auth.common.MediaFileUtil;
 import com.sean.rao.ali_auth.common.NativeBackgroundAdapter;
 
@@ -74,6 +75,7 @@ public class CustomAssetsConfig extends BaseUIConfig {
                 .setRootViewId(AuthRegisterViewConfig.RootViewId.ROOT_VIEW_ID_BODY)
                 .build());
 
+        mAuthHelper.setUIClickListener(new CustomAuthUIControlClickListener());
         mAuthHelper.setAuthUIConfig(config.setScreenOrientation(authPageOrientation).create());
     }
 }

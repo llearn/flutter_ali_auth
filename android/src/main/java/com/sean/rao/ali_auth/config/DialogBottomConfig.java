@@ -7,6 +7,7 @@ import androidx.core.graphics.drawable.RoundedBitmapDrawable;
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 
 import com.mobile.auth.gatewayauth.AuthRegisterViewConfig;
+import com.sean.rao.ali_auth.common.CustomAuthUIControlClickListener;
 import com.sean.rao.ali_auth.utils.AppUtils;
 import com.sean.rao.ali_auth.utils.UtilTool;
 
@@ -46,6 +47,7 @@ public class DialogBottomConfig extends BaseUIConfig {
             }
         }
 
+        mAuthHelper.setUIClickListener(new CustomAuthUIControlClickListener());
         mAuthHelper.setAuthUIConfig(config.setScreenOrientation(authPageOrientation).create());
     }
 }

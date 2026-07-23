@@ -1,9 +1,24 @@
 #  
 
-## 1.3.9
-* FIX BUG
+## 1.4.0
+* Update Android SDK to 2.14.23
+* Update iOS SDK to 2.14.18
+* Change the introduction of iOS to a dynamic library, and modify the framework to xcframework to support Apple Silicon iOS 26+ simulators
+* Fix Android: 700001 callback not reaching Flutter
+  - Add setUIClickListener registration to all config classes
+  - Remove CODE_ERROR_USER_SWITCH filter in OneKeyLoginPublic
+* Fix Android: getSdkVersion method not implemented
+* Fix iOS: privacyOffsetX parameter not working (copy-paste bug, 4 locations)
+* Fix iOS: buildSheetPortraitModel protocol links not working (appPrivacyOne -> protocolOneName/URL)
+* Fix iOS: protocolColor/protocolCustomColor not taking effect
+* Fix iOS: privacyAlertTitleOffsetY being overwritten
+* Fix iOS: add privacyAlertContentHorizontalMargin support
+* Unify 500001 status code message across platforms
+* Fix Web: complete all interface methods in ali_auth_web, throw clear UnsupportedError for unsupported methods
+* New feature: add dynamic config editor page (ConfigEditorPage) for visual parameter tuning
+* Optimize demo page layout with card-based grouped design
 
-## 1.3.8
+## 1.3.9
 * Update the Android SDK to version 2.14.19
 * Update iOS SDK to 2.14.15
 * Update the web SDK to version 2.1.15

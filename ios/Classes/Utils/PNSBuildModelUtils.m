@@ -272,7 +272,7 @@
     if ([viewConfig floatValueForKey: @"privacyOffsetY" defaultValue: -1] > -1) {
       frame.origin.y = [viewConfig floatValueForKey: @"privacyOffsetY" defaultValue: -1];
     }
-    if ([viewConfig floatValueForKey: @"privacyOffsetY" defaultValue: -1] > -1) {
+    if ([viewConfig floatValueForKey: @"privacyOffsetX" defaultValue: -1] > -1) {
       frame.origin.x = [viewConfig floatValueForKey: @"privacyOffsetX" defaultValue: -1];
     }
     return frame;
@@ -638,6 +638,15 @@
       [self getColor: privacyColors[0]],
       [self getColor: privacyColors[1]]
     ];
+  } else {
+    NSString *baseColor = [viewConfig stringValueForKey: @"protocolColor" defaultValue: nil];
+    NSString *linkColor = [viewConfig stringValueForKey: @"protocolCustomColor" defaultValue: nil];
+    if (baseColor != nil && linkColor != nil) {
+      model.privacyColors = @[
+        [self getColor: baseColor],
+        [self getColor: linkColor]
+      ];
+    }
   }
 
   model.privacyAlertContentUnderline = [viewConfig boolValueForKey: @"privacyAlertProtocolNameUseUnderLine" defaultValue: NO];
@@ -670,7 +679,7 @@
     if ([viewConfig floatValueForKey: @"privacyOffsetY" defaultValue: -1] > -1) {
       frame.origin.y = [viewConfig floatValueForKey: @"privacyOffsetY" defaultValue: -1];
     }
-    if ([viewConfig floatValueForKey: @"privacyOffsetY" defaultValue: -1] > -1) {
+    if ([viewConfig floatValueForKey: @"privacyOffsetX" defaultValue: -1] > -1) {
       frame.origin.x = [viewConfig floatValueForKey: @"privacyOffsetX" defaultValue: -1];
     }
     return frame;
@@ -1116,14 +1125,33 @@
     model.checkBoxWH = [viewConfig floatValueForKey: @"checkBoxHeight" defaultValue: 17.0];
     /// 9勾选统一按钮 END
     ///
-    model.privacyOne = [[viewConfig stringValueForKey: @"appPrivacyOne" defaultValue: nil] componentsSeparatedByString:@","];
-    model.privacyTwo = [[viewConfig stringValueForKey: @"appPrivacyTwo" defaultValue: nil] componentsSeparatedByString:@","];
+    model.privacyOne = @[
+      [viewConfig stringValueForKey: @"protocolOneName" defaultValue: @""],
+      [viewConfig stringValueForKey: @"protocolOneURL" defaultValue: @""]
+    ];
+    model.privacyTwo = @[
+      [viewConfig stringValueForKey: @"protocolTwoName" defaultValue: @""],
+      [viewConfig stringValueForKey: @"protocolTwoURL" defaultValue: @""]
+    ];
+    model.privacyThree = @[
+      [viewConfig stringValueForKey: @"protocolThreeName" defaultValue: @""],
+      [viewConfig stringValueForKey: @"protocolThreeURL" defaultValue: @""]
+    ];
     NSArray *privacyColors = [[viewConfig stringValueForKey: @"appPrivacyColor" defaultValue: nil] componentsSeparatedByString:@","];
     if(privacyColors != nil && privacyColors.count > 1){
       model.privacyColors = @[
         [self getColor: privacyColors[0]],
         [self getColor: privacyColors[1]]
       ];
+    } else {
+      NSString *baseColor = [viewConfig stringValueForKey: @"protocolColor" defaultValue: nil];
+      NSString *linkColor = [viewConfig stringValueForKey: @"protocolCustomColor" defaultValue: nil];
+      if (baseColor != nil && linkColor != nil) {
+        model.privacyColors = @[
+          [self getColor: baseColor],
+          [self getColor: linkColor]
+        ];
+      }
     }
 
     model.privacyAlertContentUnderline = [viewConfig boolValueForKey: @"privacyAlertProtocolNameUseUnderLine" defaultValue: NO];
@@ -1959,7 +1987,7 @@
     if ([dict floatValueForKey: @"privacyOffsetY" defaultValue: -1] > -1) {
       frame.origin.y = [dict floatValueForKey: @"privacyOffsetY" defaultValue: -1];
     }
-    if ([dict floatValueForKey: @"privacyOffsetY" defaultValue: -1] > -1) {
+    if ([dict floatValueForKey: @"privacyOffsetX" defaultValue: -1] > -1) {
       frame.origin.x = [dict floatValueForKey: @"privacyOffsetX" defaultValue: -1];
     }
     return frame;
@@ -2046,10 +2074,21 @@
   #pragma mark 屏幕方向
   if (model.privacyAlertIsNeedShow) {
     model.privacyAlertTitleFrameBlock = ^CGRect(CGSize screenSize, CGSize superViewSize, CGRect frame) {
-        return CGRectMake(0, 20, frame.size.width, frame.size.height);
+        return CGRectMake(
+            0,
+            [dict floatValueForKey: @"privacyAlertTitleOffsetY" defaultValue: 20],
+            frame.size.width,
+            frame.size.height
+        );
     };
     model.privacyAlertPrivacyContentFrameBlock = ^CGRect(CGSize screenSize, CGSize superViewSize, CGRect frame) {
-        return CGRectMake(0, frame.origin.y+10, frame.size.width, frame.size.height);
+        CGFloat horizontalMargin = [dict floatValueForKey: @"privacyAlertContentHorizontalMargin" defaultValue: 0];
+        return CGRectMake(
+            horizontalMargin,
+            frame.origin.y + 10,
+            frame.size.width - horizontalMargin * 2,
+            frame.size.height
+        );
     };
   }
   
