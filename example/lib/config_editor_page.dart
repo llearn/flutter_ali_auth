@@ -20,6 +20,7 @@ class _ConfigEditorPageState extends State<ConfigEditorPage> {
     // 基本
     'androidSk': '',
     'iosSk': '',
+    'ohosSk': '',
     'isDebug': true,
     'isDelay': false,
     'pageType': PageType.fullPort.index,
@@ -389,6 +390,7 @@ class _ConfigEditorPageState extends State<ConfigEditorPage> {
     return AliAuthModel(
       '${_config['androidSk'] ?? ''}',
       '${_config['iosSk'] ?? ''}',
+      ohosSk: '${_config['ohosSk'] ?? ''}',
       isDebug: _config['isDebug'] as bool? ?? true,
       isDelay: _config['isDelay'] as bool? ?? false,
       pageType: PageType.values[_config['pageType'] as int? ?? PageType.fullPort.index],
@@ -646,6 +648,8 @@ class _ConfigEditorPageState extends State<ConfigEditorPage> {
                     Expanded(child: _buildTextField('iosSk', 'iOS SK', hint: '必填')),
                   ],
                 ),
+                const SizedBox(height: 4),
+                _buildTextField('ohosSk', 'OHOS SK', hint: '鸿蒙端必填'),
                 const SizedBox(height: 4),
                 Row(
                   children: [

@@ -8,6 +8,9 @@ class AliAuthModel {
   /// aliyun sk
   late String? iosSk;
 
+  /// aliyun sk
+  late String? ohosSk;
+
   /// 是否开启debug模式
   late bool? isDebug;
 
@@ -652,6 +655,7 @@ class AliAuthModel {
   AliAuthModel(
     this.androidSk,
     this.iosSk, {
+    this.ohosSk,
     this.isDebug = true,
     this.isDelay = false,
     this.pageType = PageType.fullPort,
@@ -877,7 +881,7 @@ class AliAuthModel {
     this.authPageUseDayLight=false,
     this.keepAllPageHideNavigationBar=false,
     this.closeAuthPageReturnBack=false,
-  })  : assert(androidSk != null || iosSk != null),
+  })  : assert(androidSk != null || iosSk != null || ohosSk != null),
         assert(pageType != null),
         assert(isDelay != null);
 
@@ -888,6 +892,7 @@ Map<String, dynamic> _$AliAuthModelToJson(AliAuthModel instance) =>
     <String, dynamic>{
       'androidSk': instance.androidSk,
       'iosSk': instance.iosSk,
+      'ohosSk': instance.ohosSk,
       'isDebug': instance.isDebug ?? false,
       'isDelay': instance.isDelay ?? false,
       'pageType': instance.pageType?.index ?? 0,
