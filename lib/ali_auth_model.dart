@@ -218,6 +218,11 @@ class AliAuthModel {
   /// 如果设置错误或者找不到图片则使用默认样式
   late String? logBtnBackgroundPath;
 
+  /// Solid fallback and corner radius (vp/pt/dp) for native authorization buttons.
+  late String? logBtnBackgroundColor;
+  late int? logBtnCornerRadius;
+  late bool? logBtnTextBold;
+
   /// 设置登录按钮相对导航栏顶部的位移，单位 dp
   late int? logBtnOffsetY;
 
@@ -709,6 +714,9 @@ class AliAuthModel {
     this.protocolOwnThreeColor,
     this.sloganText,
     this.logBtnBackgroundPath,
+    this.logBtnBackgroundColor,
+    this.logBtnCornerRadius,
+    this.logBtnTextBold,
     this.loadingImgPath,
     this.sloganOffsetY,
     this.logoOffsetY,
@@ -927,6 +935,9 @@ Map<String, dynamic> _$AliAuthModelToJson(AliAuthModel instance) =>
       'protocolOwnTwoColor': instance.protocolOwnTwoColor,
       'sloganText': instance.sloganText,
       'logBtnBackgroundPath': instance.logBtnBackgroundPath,
+      'logBtnBackgroundColor': instance.logBtnBackgroundColor,
+      'logBtnCornerRadius': instance.logBtnCornerRadius,
+      'logBtnTextBold': instance.logBtnTextBold,
       'loadingImgPath': instance.loadingImgPath,
       'sloganOffsetY': instance.sloganOffsetY,
       'logoOffsetY': instance.logoOffsetY,

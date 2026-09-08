@@ -22,6 +22,7 @@ import PhoneNumberAuthHelper, {
   TokenResultListener
 } from 'numberauth_standard';
 import { AliAuthUiResult, createAliAuthUiConfig } from '../config/AliAuthUiConfig';
+import { clearAuthDecoration } from '../config/AliAuthDecoration';
 
 const METHOD_CHANNEL_NAME: string = 'ali_auth';
 const EVENT_CHANNEL_NAME: string = 'ali_auth/event';
@@ -430,7 +431,12 @@ export default class AliAuthPlugin implements FlutterPlugin, MethodCallHandler, 
       this.tokenListener = new AliAuthTokenListener(this, generation);
       this.helper = PhoneNumberAuthHelper.getInstance(this.abilityContext, this.tokenListener);
       this.helper.setAuthListener(this.tokenListener);
-      const uiResult: AliAuthUiResult = createAliAuthUiConfig(call);
+      const uiResult: AliAuthUiResult = createAliAuthUiConfig(call, (alternate: boolean) => {
+        if (generation !== this.sdkGeneration) return;
+        // Emit before closing: a subsequent SDK cancel must not win over switch.
+        this.emitEvent(alternate ? '700001' : '700000');
+        this.helper?.quitLoginPage().catch(() => {});
+      });
       this.helper.setAuthConfig(uiResult.config);
       this.helper.setDialog(uiResult.isDialog);
       this.helper.setUIClickListener(new AliAuthUiClickListener(this, generation));
@@ -600,6 +606,7 @@ export default class AliAuthPlugin implements FlutterPlugin, MethodCallHandler, 
   }
 
   private releaseSdk(): void {
+    clearAuthDecoration();
     this.sdkGeneration += 1;
     this.preLoginRequested = false;
     this.initialized = false;

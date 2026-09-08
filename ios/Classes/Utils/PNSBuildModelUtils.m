@@ -1834,7 +1834,7 @@
         initWithString: [dict stringValueForKey: @"logBtnText" defaultValue: @"一键登录"]
             attributes: @{
               NSForegroundColorAttributeName: [self getColor: [dict stringValueForKey: @"logBtnTextColor" defaultValue: @"#ff00ff"]],
-              NSFontAttributeName: [UIFont systemFontOfSize: [dict floatValueForKey: @"logBtnTextSize" defaultValue: 23]]
+              NSFontAttributeName: [UIFont systemFontOfSize: [dict floatValueForKey: @"logBtnTextSize" defaultValue: 23] weight:[dict boolValueForKey:@"logBtnTextBold" defaultValue:NO] ? UIFontWeightSemibold : UIFontWeightRegular]
             }
   ];
   NSArray *logBtnCustomBackgroundImagePath = [[dict stringValueForKey: @"logBtnBackgroundPath" defaultValue: @","] componentsSeparatedByString:@","];
@@ -1984,6 +1984,15 @@
   /// 扩大选区
   model.expandAuthPageCheckedScope = YES;
   model.privacyFrameBlock = ^CGRect(CGSize screenSize, CGSize superViewSize, CGRect frame) {
+    CGFloat bottom = [dict floatValueForKey:@"privacyOffsetY_B" defaultValue:-1];
+    if (bottom >= 0) {
+      frame.origin.y = MAX(0, superViewSize.height - bottom - frame.size.height);
+    }
+    CGFloat margin = [dict floatValueForKey:@"privacyMargin" defaultValue:-1];
+    if (margin >= 0 && superViewSize.width > 2 * margin) {
+      frame.origin.x = margin;
+      frame.size.width = superViewSize.width - 2 * margin;
+    }
     if ([dict floatValueForKey: @"privacyOffsetY" defaultValue: -1] > -1) {
       frame.origin.y = [dict floatValueForKey: @"privacyOffsetY" defaultValue: -1];
     }

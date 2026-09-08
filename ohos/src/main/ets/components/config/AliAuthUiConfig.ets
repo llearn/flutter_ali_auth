@@ -1,5 +1,6 @@
 import { MethodCall } from '@ohos/flutter_ohos';
 import { AuthUiConfig, OperatorIndex, PageOrientation } from 'numberauth_standard';
+import { installAuthDecoration } from './AliAuthDecoration';
 
 function stringArgument(call: MethodCall, key: string): string | undefined {
   const value: ESObject = call.argument(key);
@@ -112,6 +113,17 @@ function applyNumberConfig(call: MethodCall, config: AuthUiConfig): void {
 }
 
 function applyLoginButtonConfig(call: MethodCall, config: AuthUiConfig): void {
+  const background: string | undefined = nonEmptyStringArgument(call, 'logBtnBackgroundColor');
+  const radius: number | undefined = numberArgument(call, 'logBtnCornerRadius');
+  if (background !== undefined) {
+    config.loginBtnBackGroundColor = background;
+    config.privacyCbSelectColor = background;
+  }
+  if (radius !== undefined && radius >= 0) config.loginBtnBorder = radius;
+  config.loginBtnAlignRuleOption = {
+    middle: { anchor: '__container__', align: HorizontalAlign.Center },
+    top: { anchor: '__container__', align: VerticalAlign.Top }
+  };
   const text: string | undefined = stringArgument(call, 'logBtnText');
   const fontSize: number | undefined = numberArgument(call, 'logBtnTextSize');
   const fontColor: string | undefined = nonEmptyStringArgument(call, 'logBtnTextColor');
@@ -157,6 +169,7 @@ function applyLoginButtonConfig(call: MethodCall, config: AuthUiConfig): void {
 }
 
 function applyPrivacyConfig(call: MethodCall, config: AuthUiConfig): void {
+  config.privacyCbShape = CheckBoxShape.CIRCLE;
   const checkboxHidden: boolean | undefined = boolArgument(call, 'checkboxHidden');
   const checkboxWidth: number | undefined = numberArgument(call, 'checkBoxWidth');
   const checkboxHeight: number | undefined = numberArgument(call, 'checkBoxHeight');
@@ -463,7 +476,7 @@ export interface AliAuthUiResult {
   isDialog: boolean;
 }
 
-export function createAliAuthUiConfig(call: MethodCall): AliAuthUiResult {
+export function createAliAuthUiConfig(call: MethodCall, onExit?: (alternate: boolean) => void): AliAuthUiResult {
   const config: AuthUiConfig = new AuthUiConfig();
   applyWindowBarConfig(call, config);
   applyNavigationConfig(call, config);
@@ -472,5 +485,6 @@ export function createAliAuthUiConfig(call: MethodCall): AliAuthUiResult {
   applyPrivacyConfig(call, config);
   const isDialog: boolean = applyPageConfig(call, config);
   applyPrivacyAlertConfig(call, config);
+  if (onExit !== undefined) installAuthDecoration(call, config, onExit);
   return { config: config, isDialog: isDialog };
 }
