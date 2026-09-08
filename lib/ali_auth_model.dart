@@ -260,6 +260,10 @@ class AliAuthModel {
   /// @Deprecated("即将删除的属性......")
   late int? switchAccTextSize;
 
+  /// Optional accessible target size, without enlarging the label (Android/iOS).
+  late int? switchAccButtonWidth;
+  late int? switchAccButtonHeight;
+
   /// 设置换按钮相对导航栏顶部的位移，单位 dp
   late int? switchOffsetY;
 
@@ -397,6 +401,10 @@ class AliAuthModel {
   /// dialog安卓端有效 iOS无效
   late int? pageBackgroundRadius;
   late bool? webSupportedJavascript;
+
+  /// setAuthPageActIn
+  /// Use a neutral fade for native entry/dismissal instead of navigation motion.
+  late bool? authPageCrossFade;
 
   /// setAuthPageActIn
   late String? authPageActIn;
@@ -685,6 +693,8 @@ class AliAuthModel {
     this.numberColor,
     this.numberSize,
     this.switchAccHidden,
+    this.switchAccButtonWidth,
+    this.switchAccButtonHeight,
     this.switchCheck,
     this.switchAccTextColor,
     this.logBtnText,
@@ -779,6 +789,7 @@ class AliAuthModel {
     this.webNavReturnImgPath,
     this.webSupportedJavascript,
     this.authPageActIn,
+    this.authPageCrossFade,
     this.activityOut,
     this.authPageActOut,
     this.activityIn,
@@ -924,6 +935,8 @@ Map<String, dynamic> _$AliAuthModelToJson(AliAuthModel instance) =>
       'numberColor': instance.numberColor,
       'numberSize': instance.numberSize,
       'switchAccHidden': instance.switchAccHidden,
+      'switchAccButtonWidth': instance.switchAccButtonWidth,
+      'switchAccButtonHeight': instance.switchAccButtonHeight,
       'switchCheck': instance.switchCheck,
       'switchAccTextColor': instance.switchAccTextColor,
       'logBtnText': instance.logBtnText ?? "本机一键登录",
@@ -988,6 +1001,7 @@ Map<String, dynamic> _$AliAuthModelToJson(AliAuthModel instance) =>
       'webNavReturnImgPath': instance.webNavReturnImgPath,
       'webSupportedJavascript': instance.webSupportedJavascript,
       'authPageActIn': instance.authPageActIn,
+      'authPageCrossFade': instance.authPageCrossFade,
       'activityOut': instance.activityOut,
       'authPageActOut': instance.authPageActOut,
       'activityIn': instance.activityIn,

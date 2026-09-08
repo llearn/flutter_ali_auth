@@ -85,13 +85,18 @@ public class OneKeyLoginPublic extends LoginParams {
 
             @Override
             public void onTokenFailed(String s) {
-                sdkAvailable = false;
                 mAuthHelper.hideLoginLoading();
                 Log.e(TAG, "获取token失败：" + s);
                 try {
                     TokenRet tokenRet = TokenRet.fromJson(s);
+                    // Switching methods or cancelling is not an environment failure.
+                    if (!ResultCode.CODE_ERROR_USER_CANCEL.equals(tokenRet.getCode())
+                            && !ResultCode.CODE_ERROR_USER_SWITCH.equals(tokenRet.getCode())) {
+                        sdkAvailable = false;
+                    }
                     showResult(tokenRet.getCode(), tokenRet.getMsg(),null);
                 } catch (Exception e) {
+                    sdkAvailable = false;
                     e.fillInStackTrace();
                 }
                 mAuthHelper.setAuthListener(null);
@@ -149,7 +154,7 @@ public class OneKeyLoginPublic extends LoginParams {
      */
     private void oneKeyLogin() {
         mUIConfig.configAuthPage();
-        mAuthHelper.getLoginToken(mContext, 5000);
+        mAuthHelper.getLoginToken(mActivity, 5000);
     }
 
     /**
@@ -215,7 +220,7 @@ public class OneKeyLoginPublic extends LoginParams {
             }
         };
         mAuthHelper.setAuthListener(mTokenResultListener);
-        mAuthHelper.getLoginToken(mContext, timeout);
+        mAuthHelper.getLoginToken(mActivity, timeout);
     }
 
 

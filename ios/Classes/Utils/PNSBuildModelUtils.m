@@ -1600,6 +1600,20 @@
                            selector:(SEL)selector {
   NSLog(@"%@", dict);
   TXCustomModel *model = [TXCustomModel mj_objectWithKeyValues: dict];
+  if ([dict boolValueForKey:@"authPageCrossFade" defaultValue:NO]) {
+    CABasicAnimation *entry = [CABasicAnimation animationWithKeyPath:@"opacity"];
+    entry.fromValue = @0;
+    entry.toValue = @1;
+    entry.duration = 0.26;
+    entry.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    model.entryAnimation = entry;
+    CABasicAnimation *exit = [CABasicAnimation animationWithKeyPath:@"opacity"];
+    exit.fromValue = @1;
+    exit.toValue = @0;
+    exit.duration = 0.26;
+    exit.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    model.exitAnimation = exit;
+  }
   for (NSString *key in dict) {
     if (key && key.length > 0 && dict[key] != nil) {
       NSString *newKey = [AliAuthEnum keyPair][key]?:key;
@@ -1879,11 +1893,14 @@
     ];
     model.changeBtnFrameBlock = ^CGRect(CGSize screenSize, CGSize superViewSize, CGRect frame) {
       if (screenSize.height > screenSize.width) {
+        CGFloat height = MAX(30, [dict floatValueForKey:@"switchAccButtonHeight" defaultValue:30]);
+        CGFloat width = MIN(superViewSize.width - 20,
+            [dict floatValueForKey:@"switchAccButtonWidth" defaultValue:superViewSize.width - 20]);
         return CGRectMake(
-          10,
-          [dict floatValueForKey: @"switchOffsetY" defaultValue: frame.origin.y],
-          superViewSize.width - 20,
-          30
+          (superViewSize.width - width) / 2,
+          [dict floatValueForKey:@"switchOffsetY" defaultValue:frame.origin.y] + (30 - height) / 2,
+          width,
+          height
         );
       } else {
         return CGRectZero; //横屏时模拟隐藏该控件
